@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Запакуй · WB · Январь 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #181c28;
+    --bg3: #1e2336;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8eaf6;
+    --muted: #7b82a0;
+    --accent: #7c6af7;
+    --accent2: #a89aff;
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.1);
+    --yellow: #fbbf24;
+    --yellow-dim: rgba(251,191,36,0.1);
+    --wb: #cb11ab;
+    --wb-dim: rgba(203,17,171,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0f1117 0%, #1a1040 50%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(124,106,247,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo {
+    width: 42px; height: 42px;
+    background: var(--accent);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 16px; font-weight: 900;
+    color: white;
+    flex-shrink: 0;
+  }
+  .brand-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+  }
+  .brand-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .badges {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .badge-wb {
+    background: var(--wb-dim);
+    color: var(--wb);
+    border: 1px solid rgba(203,17,171,0.3);
+  }
+  .badge-month {
+    background: rgba(124,106,247,0.15);
+    color: var(--accent2);
+    border: 1px solid rgba(124,106,247,0.3);
+  }
+  .badge-skus {
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .header-note {
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .kpi-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .kpi-card:hover { border-color: rgba(255,255,255,0.14); }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 14px 14px 0 0;
+  }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.red::before { background: var(--red); }
+  .kpi-card.accent::before { background: var(--accent); }
+  .kpi-card.yellow::before { background: var(--yellow); }
+  .kpi-card.wb::before { background: var(--wb); }
+  
+  .kpi-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.red { color: var(--red); }
+  .kpi-value.yellow { color: var(--yellow); }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .kpi-sub .target { color: var(--yellow); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* TWO COLUMNS */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+
+  /* WATERFALL */
+  .waterfall-row {
+    display: grid;
+    grid-template-columns: 1fr 100px 80px;
+    gap: 8px;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+  }
+  .waterfall-row:last-child { border-bottom: none; }
+  .waterfall-row.total {
+    font-weight: 700;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+  .wf-label { color: var(--text); }
+  .wf-value { text-align: right; font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 600; }
+  .wf-pct { text-align: right; font-size: 11px; color: var(--muted); }
+  .wf-bar-wrap { grid-column: 1/-1; margin-top: 2px; }
+  .wf-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin-top: -6px;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+  .pos { color: var(--green); }
+  .neg { color: var(--red); }
+  .neutral { color: var(--text); }
+
+  /* DEDUCTIONS DONUT */
+  .deduct-list { margin-top: 4px; }
+  .deduct-row {
+    display: grid;
+    grid-template-columns: 14px 1fr 80px 60px;
+    gap: 8px;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+  }
+  .deduct-row:last-child { border-bottom: none; }
+  .deduct-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .deduct-name { color: var(--text); }
+  .deduct-val { text-align: right; color: var(--red); font-weight: 600; font-size: 12px; font-family: 'Unbounded', sans-serif; }
+  .deduct-pct { text-align: right; color: var(--muted); font-size: 11px; }
+
+  /* SKU Distribution */
+  .sku-dist {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .sku-stat {
+    background: var(--bg3);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .sku-stat-val {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .sku-stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* TABLE */
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .sku-table thead tr {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .sku-table th {
+    text-align: left;
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    padding: 6px 8px 10px;
+    font-weight: 600;
+  }
+  .sku-table th.right { text-align: right; }
+  .sku-table td { padding: 9px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+  .sku-table tr:last-child td { border-bottom: none; }
+  .rank {
+    width: 20px; height: 20px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .sku-name { color: var(--text); font-weight: 500; max-width: 220px; }
+  .td-right { text-align: right; }
+  .profit-val { font-weight: 700; font-family: 'Unbounded', sans-serif; font-size: 12px; }
+  
+  /* SPARKLINE */
+  .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 28px; }
+  .spark-bar { width: 6px; border-radius: 2px 2px 0 0; min-height: 3px; }
+
+  /* ALERTS */
+  .alerts { display: flex; flex-direction: column; gap: 10px; }
+  .alert {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid;
+    align-items: flex-start;
+  }
+  .alert.danger { background: var(--red-dim); border-color: rgba(248,113,113,0.2); }
+  .alert.warn { background: var(--yellow-dim); border-color: rgba(251,191,36,0.2); }
+  .alert.ok { background: var(--green-dim); border-color: rgba(52,211,153,0.2); }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert-text { flex: 1; }
+  .alert-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+  .alert.danger .alert-title { color: var(--red); }
+  .alert.warn .alert-title { color: var(--yellow); }
+  .alert.ok .alert-title { color: var(--green); }
+  .alert-desc { font-size: 12px; color: var(--muted); }
+  .alert-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .alert.danger .alert-badge { background: rgba(248,113,113,0.15); color: var(--red); }
+  .alert.warn .alert-badge { background: rgba(251,191,36,0.1); color: var(--yellow); }
+  .alert.ok .alert-badge { background: rgba(52,211,153,0.12); color: var(--green); }
+
+  /* LOGISTICS */
+  .logist-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+  }
+  .logist-row:last-child { border-bottom: none; }
+  .logist-bar-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .logist-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+
+  /* MARGIN BAR */
+  .margin-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 60px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 12.5px;
+  }
+  .margin-row:last-child { border-bottom: none; }
+  .margin-track { height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; margin-top: 4px; }
+  .margin-fill { height: 100%; border-radius: 3px; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    margin-top: 10px;
+  }
+
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .container { padding: 20px; }
+    .header { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="brand">
+      <div class="logo">З</div>
+      <div>
+        <div class="brand-name">Запакуй</div>
+        <div class="brand-sub">Финансовый дашборд · Wildberries · Январь 2026</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge badge-wb">WB · FBO</span>
+      <span class="badge badge-month">Январь 2026</span>
+      <span class="badge badge-skus">180 SKU</span>
+    </div>
+  </div>
+  <div class="header-note">Данные верифицированы по отчёту реализации WB · Справочник себестоимостей актуален</div>
+</div>
+
+<div class="container">
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="kpi-label">Выручка WB (реализовал)</div>
+      <div class="kpi-value">318 812 ₽</div>
+      <div class="kpi-sub">886 продаж · 9 возвратов</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">К перечислению продавцу</div>
+      <div class="kpi-value">300 207 ₽</div>
+      <div class="kpi-sub">после вычетов WB</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">Вычеты WB (все)</div>
+      <div class="kpi-value red">−130 183 ₽</div>
+      <div class="kpi-sub">40.8% от выручки WB</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Чистая прибыль</div>
+      <div class="kpi-value green">+90 061 ₽</div>
+      <div class="kpi-sub">после COGS и вычетов</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">Маржа</div>
+      <div class="kpi-value yellow">28.2%</div>
+      <div class="kpi-sub">цель: <span class="target">15–20%</span> · ✅ выше цели</div>
+    </div>
+  </div>
+
+  <!-- P&L WATERFALL + DEDUCTIONS -->
+  <div class="two-col">
+    <!-- Waterfall -->
+    <div class="card">
+      <div class="section-title">P&L · Водопад</div>
+
+      <div class="waterfall-row">
+        <div class="wf-label">WB реализовал (выручка)</div>
+        <div class="wf-value pos">+318 812 ₽</div>
+        <div class="wf-pct">100%</div>
+      </div>
+      <div style="height:3px;background:linear-gradient(90deg,#34d399,transparent);border-radius:2px;margin:0 0 4px;opacity:0.5"></div>
+
+      <div class="waterfall-row">
+        <div class="wf-label">− Комиссия WB (ВВ+НДС)</div>
+        <div class="wf-value neg">−9 433 ₽</div>
+        <div class="wf-pct">3.0%</div>
+      </div>
+      <div class="waterfall-row">
+        <div class="wf-label">− Эквайринг / платежи</div>
+        <div class="wf-value neg">−9 741 ₽</div>
+        <div class="wf-pct">3.1%</div>
+      </div>
+      <div class="waterfall-row">
+        <div class="wf-label">+ Компенсация ПВЗ</div>
+        <div class="wf-value pos">+9 539 ₽</div>
+        <div class="wf-pct">3.0%</div>
+      </div>
+      <div class="waterfall-row total">
+        <div class="wf-label">К перечислению продавцу</div>
+        <div class="wf-value neutral">300 207 ₽</div>
+        <div class="wf-pct">94.2%</div>
+      </div>
+
+      <div style="height:1px;background:var(--border);margin:12px 0"></div>
+
+      <div class="waterfall-row">
+        <div class="wf-label">− Логистика (доставка)</div>
+        <div class="wf-value neg">−110 932 ₽</div>
+        <div class="wf-pct">34.8%</div>
+      </div>
+      <div class="waterfall-row">
+        <div class="wf-label">− Хранение</div>
+        <div class="wf-value neg">−635 ₽</div>
+        <div class="wf-pct">0.2%</div>
+      </div>
+      <div class="waterfall-row">
+        <div class="wf-label">− Штрафы</div>
+        <div class="wf-value neg">−10 ₽</div>
+        <div class="wf-pct">0.0%</div>
+      </div>
+      <div class="waterfall-row total">
+        <div class="wf-label">Доход продавца (до COGS)</div>
+        <div class="wf-value neutral">188 629 ₽</div>
+        <div class="wf-pct">59.2%</div>
+      </div>
+
+      <div style="height:1px;background:var(--border);margin:12px 0"></div>
+
+      <div class="waterfall-row">
+        <div class="wf-label">− Себестоимость товаров</div>
+        <div class="wf-value neg">−102 305 ₽</div>
+        <div class="wf-pct">32.1%</div>
+      </div>
+      <div class="waterfall-row total" style="border-top:2px solid rgba(52,211,153,0.4)">
+        <div class="wf-label" style="color:var(--green);font-family:'Unbounded',sans-serif;font-size:12px">Чистая прибыль</div>
+        <div class="wf-value pos" style="font-size:14px">+90 061 ₽</div>
+        <div class="wf-pct" style="color:var(--green)">28.2%</div>
+      </div>
+    </div>
+
+    <!-- Deductions breakdown -->
+    <div class="card">
+      <div class="section-title">Структура вычетов WB</div>
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="font-family:'Unbounded',sans-serif;font-size:28px;font-weight:700;color:var(--red)">−130 183 ₽</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">итого вычеты · 40.8% от выручки</div>
+      </div>
+
+      <!-- Visual bar for deduction composition -->
+      <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;margin-bottom:18px;gap:1px">
+        <div style="width:85.2%;background:#7c6af7" title="Логистика"></div>
+        <div style="width:7.5%;background:#f87171" title="Эквайринг"></div>
+        <div style="width:7.3%;background:#fb923c" title="ВВ комиссия"></div>
+      </div>
+
+      <div class="deduct-list">
+        <div class="deduct-row">
+          <div class="deduct-dot" style="background:#7c6af7"></div>
+          <div class="deduct-name">Логистика (доставка)</div>
+          <div class="deduct-val">−110 932 ₽</div>
+          <div class="deduct-pct">85.2%</div>
+        </div>
+        <div class="deduct-row">
+          <div class="deduct-dot" style="background:#f87171"></div>
+          <div class="deduct-name">Эквайринг / платежи</div>
+          <div class="deduct-val">−9 741 ₽</div>
+          <div class="deduct-pct">7.5%</div>
+        </div>
+        <div class="deduct-row">
+          <div class="deduct-dot" style="background:#fb923c"></div>
+          <div class="deduct-name">Комиссия WB (ВВ+НДС)</div>
+          <div class="deduct-val">−9 433 ₽</div>
+          <div class="deduct-pct">7.2%</div>
+        </div>
+        <div class="deduct-row">
+          <div class="deduct-dot" style="background:#60a5fa"></div>
+          <div class="deduct-name">Хранение</div>
+          <div class="deduct-val">−635 ₽</div>
+          <div class="deduct-pct">0.5%</div>
+        </div>
+        <div class="deduct-row">
+          <div class="deduct-dot" style="background:#fbbf24"></div>
+          <div class="deduct-name">⚠ Штрафы</div>
+          <div class="deduct-val">−10 ₽</div>
+          <div class="deduct-pct">0.01%</div>
+        </div>
+        <div class="deduct-row" style="border-top:1px solid rgba(52,211,153,0.2);margin-top:6px;padding-top:10px">
+          <div class="deduct-dot" style="background:var(--green)"></div>
+          <div class="deduct-name" style="color:var(--green)">✅ Компенсация ПВЗ</div>
+          <div class="deduct-val" style="color:var(--green)">+9 539 ₽</div>
+          <div class="deduct-pct" style="color:var(--green)">−7.3%</div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg3);border-radius:8px;padding:12px;margin-top:16px;font-size:12px">
+        <div style="color:var(--muted);margin-bottom:4px">Логистика на 1 заказ</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--text)">~125 ₽</div>
+        <div style="color:var(--muted);font-size:11px;margin-top:2px">110 932 ₽ / 886 продаж</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKU DISTRIBUTION + EXTRAS -->
+  <div class="two-col">
+    <div class="card">
+      <div class="section-title">Ассортимент · 180 SKU</div>
+
+      <div class="sku-dist">
+        <div class="sku-stat">
+          <div class="sku-stat-val" style="color:var(--green)">113</div>
+          <div class="sku-stat-label">Прибыльных</div>
+        </div>
+        <div class="sku-stat">
+          <div class="sku-stat-val" style="color:var(--red)">33</div>
+          <div class="sku-stat-label">Убыточных</div>
+        </div>
+        <div class="sku-stat">
+          <div class="sku-stat-val" style="color:var(--muted)">33</div>
+          <div class="sku-stat-label">Нет продаж</div>
+        </div>
+        <div class="sku-stat">
+          <div class="sku-stat-val" style="color:var(--yellow)">1</div>
+          <div class="sku-stat-label">Нет с/с</div>
+        </div>
+      </div>
+
+      <!-- Stacked bar -->
+      <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px;margin-bottom:10px">
+        <div style="width:62.8%;background:var(--green)" title="Прибыльных"></div>
+        <div style="width:18.3%;background:var(--red)" title="Убыточных"></div>
+        <div style="width:18.3%;background:rgba(255,255,255,0.1)" title="Нет продаж"></div>
+        <div style="width:0.6%;background:var(--yellow)" title="Нет с/с"></div>
+      </div>
+
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:16px">
+        <div style="font-size:13px">
+          <div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Продано</div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700">877 шт</div>
+          <div style="font-size:11px;color:var(--muted)">886 − 9 возвратов</div>
+        </div>
+        <div style="font-size:13px">
+          <div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Убыток убыт. SKU</div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;color:var(--red)">−19 748 ₽</div>
+        </div>
+        <div style="font-size:13px">
+          <div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">❓ Нет с/с</div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;color:var(--yellow)">1 SKU</div>
+          <div style="font-size:11px;color:var(--muted)">доход +461 ₽ не учтён</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Margin breakdown by top SKU -->
+    <div class="card">
+      <div class="section-title">Маржа топ-SKU</div>
+      <div class="margin-row">
+        <div>
+          <div style="font-size:12px;color:var(--text)">Коробка-куб белая 21×21</div>
+          <div class="margin-track"><div class="margin-fill" style="width:54%;background:var(--green)"></div></div>
+        </div>
+        <div class="td-right" style="font-family:'Unbounded',sans-serif;font-size:12px;color:var(--green)">54.3%</div>
+        <div></div>
+      </div>
+      <div class="margin-row">
+        <div>
+          <div style="font-size:12px;color:var(--text)">Коробка шоколад 21×21</div>
+          <div class="margin-track"><div class="margin-fill" style="width:58.6%;background:var(--green)"></div></div>
+        </div>
+        <div class="td-right" style="font-family:'Unbounded',sans-serif;font-size:12px;color:var(--green)">58.6%</div>
+        <div></div>
+      </div>
+      <div class="margin-row">
+        <div>
+          <div style="font-size:12px;color:var(--text)">Наполнитель шарики</div>
+          <div class="margin-track"><div class="margin-fill" style="width:50.5%;background:var(--green)"></div></div>
+        </div>
+        <div class="td-right" style="font-family:'Unbounded',sans-serif;font-size:12px;color:var(--green)">50.5%</div>
+        <div></div>
+      </div>
+      <div class="margin-row">
+        <div>
+          <div style="font-size:12px;color:var(--text)">Карабин-кольцо золото</div>
+          <div class="margin-track"><div class="margin-fill" style="width:56.5%;background:var(--green)"></div></div>
+        </div>
+        <div class="td-right" style="font-family:'Unbounded',sans-serif;font-size:12px;color:var(--green)">56.5%</div>
+        <div></div>
+      </div>
+      <div class="margin-row">
+        <div>
+          <div style="font-size:12px;color:var(--text)">Коробка-куб золотая 21×21</div>
+          <div class="margin-track"><div class="margin-fill" style="width:50.9%;background:var(--green)"></div></div>
+        </div>
+        <div class="td-right" style="font-family:'Unbounded',sans-serif;font-size:12px;color:var(--green)">50.9%</div>
+        <div></div>
+      </div>
+      <div class="margin-row" style="border-top:1px solid rgba(251,191,36,0.3);margin-top:8px;padding-top:12px">
+        <div>
+          <div style="font-size:12px;color:var(--yellow);font-weight:600">СРЕДНЯЯ МАРЖА</div>
+          <div class="margin-track"><div class="margin-fill" style="width:28.2%;background:var(--yellow)"></div></div>
+        </div>
+        <div class="td-right" style="font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--yellow)">28.2%</div>
+        <div style="font-size:10px;color:var(--green);text-align:right">✅ цель</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP 5 TABLES -->
+  <div class="two-col">
+    <!-- Top 5 Profitable -->
+    <div class="card">
+      <div class="section-title">ТОП-5 · Прибыльные SKU</div>
+      <table class="sku-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Товар</th>
+            <th class="right">Шт</th>
+            <th class="right">Прибыль</th>
+            <th class="right">Маржа</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank" style="background:rgba(52,211,153,0.15);color:var(--green)">1</span></td>
+            <td class="sku-name">Коробка-куб белая 21×21×21 см</td>
+            <td class="td-right">67</td>
+            <td class="td-right profit-val" style="color:var(--green)">+18 056 ₽</td>
+            <td class="td-right" style="color:var(--green)">54.3%</td>
+          </tr>
+          <tr>
+            <td><span class="rank" style="background:rgba(52,211,153,0.1);color:var(--green)">2</span></td>
+            <td class="sku-name">Коробка шоколад 21×21×21 см</td>
+            <td class="td-right">35</td>
+            <td class="td-right profit-val" style="color:var(--green)">+11 054 ₽</td>
+            <td class="td-right" style="color:var(--green)">58.6%</td>
+          </tr>
+          <tr>
+            <td><span class="rank">3</span></td>
+            <td class="sku-name">Наполнитель пенопластовые шарики</td>
+            <td class="td-right">29</td>
+            <td class="td-right profit-val" style="color:var(--green)">+9 917 ₽</td>
+            <td class="td-right" style="color:var(--green)">50.5%</td>
+          </tr>
+          <tr>
+            <td><span class="rank">4</span></td>
+            <td class="sku-name">Карабин-кольцо золото 10 шт</td>
+            <td class="td-right">14</td>
+            <td class="td-right profit-val" style="color:var(--green)">+5 137 ₽</td>
+            <td class="td-right" style="color:var(--green)">56.5%</td>
+          </tr>
+          <tr>
+            <td><span class="rank">5</span></td>
+            <td class="sku-name">Коробка-куб золотая 21×21×21 см</td>
+            <td class="td-right">19</td>
+            <td class="td-right profit-val" style="color:var(--green)">+4 411 ₽</td>
+            <td class="td-right" style="color:var(--green)">50.9%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:12px;color:var(--muted)">Суммарная прибыль топ-5</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--green)">+48 576 ₽</div>
+      </div>
+    </div>
+
+    <!-- Top 5 Loss -->
+    <div class="card">
+      <div class="section-title">ТОП-5 · Убыточные SKU</div>
+      <table class="sku-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Товар</th>
+            <th class="right">Шт</th>
+            <th class="right">Убыток</th>
+            <th class="right">Маржа</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank" style="background:var(--red-dim);color:var(--red)">1</span></td>
+            <td class="sku-name">Пакет подарочный новогодний</td>
+            <td class="td-right">71</td>
+            <td class="td-right profit-val" style="color:var(--red)">−6 940 ₽</td>
+            <td class="td-right" style="color:var(--red)">−79.8%</td>
+          </tr>
+          <tr>
+            <td><span class="rank" style="background:var(--red-dim);color:var(--red)">2</span></td>
+            <td class="sku-name">Картина по номерам 40×50 см</td>
+            <td class="td-right">2</td>
+            <td class="td-right profit-val" style="color:var(--red)">−1 795 ₽</td>
+            <td class="td-right" style="color:var(--red)">−314%</td>
+          </tr>
+          <tr>
+            <td><span class="rank">3</span></td>
+            <td class="sku-name">Картина по номерам девушка цветок</td>
+            <td class="td-right">3</td>
+            <td class="td-right profit-val" style="color:var(--red)">−1 752 ₽</td>
+            <td class="td-right" style="color:var(--red)">−137%</td>
+          </tr>
+          <tr>
+            <td><span class="rank">4</span></td>
+            <td class="sku-name">Картина по номерам с бабочками</td>
+            <td class="td-right">3</td>
+            <td class="td-right profit-val" style="color:var(--red)">−1 577 ₽</td>
+            <td class="td-right" style="color:var(--red)">−161%</td>
+          </tr>
+          <tr>
+            <td><span class="rank">5</span></td>
+            <td class="sku-name">Картина по номерам 40×50</td>
+            <td class="td-right">2</td>
+            <td class="td-right profit-val" style="color:var(--red)">−946 ₽</td>
+            <td class="td-right" style="color:var(--red)">−125%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:12px;color:var(--muted)">Суммарный убыток (все 33 SKU)</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--red)">−19 748 ₽</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGISTICS + RISKS -->
+  <div class="two-col">
+    <!-- Logistics breakdown -->
+    <div class="card">
+      <div class="section-title">Логистика · −110 932 ₽ суммарно</div>
+      <div style="margin-bottom:8px;font-size:12px;color:var(--muted)">Логистика — главная статья расходов: 85.2% всех вычетов WB</div>
+
+      <div class="logist-row">
+        <div>
+          <div style="font-size:13px">Доставка до покупателя</div>
+          <div class="logist-bar-track"><div class="logist-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div style="text-align:right;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;color:var(--red)">−110 932 ₽</div>
+      </div>
+      <div class="logist-row">
+        <div>
+          <div style="font-size:13px">Хранение на складе WB</div>
+          <div class="logist-bar-track"><div class="logist-bar-fill" style="width:0.6%;background:#60a5fa"></div></div>
+        </div>
+        <div style="text-align:right;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;color:var(--red)">−635 ₽</div>
+      </div>
+
+      <div style="background:var(--bg3);border-radius:10px;padding:14px;margin-top:16px">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Ключевые метрики логистики</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div style="font-size:11px;color:var(--muted)">Лог. / выручка</div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--yellow)">34.8%</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--muted)">Лог. / К перечислению</div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--yellow)">37.0%</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--muted)">Средний чек</div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700">360 ₽</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--muted)">Лог. на заказ</div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700">~125 ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risks & Actions -->
+    <div class="card">
+      <div class="section-title">Ключевые риски и действия</div>
+      <div class="alerts">
+        <div class="alert ok">
+          <div class="alert-icon">✅</div>
+          <div class="alert-text">
+            <div class="alert-title">Маржа выше целевого уровня</div>
+            <div class="alert-desc">28.2% при цели 15–20%. WB показывает лучший результат по марже.</div>
+          </div>
+          <div class="alert-badge">+8 пп сверх цели</div>
+        </div>
+        <div class="alert danger">
+          <div class="alert-icon">❌</div>
+          <div class="alert-text">
+            <div class="alert-title">33 убыточных SKU с COGS</div>
+            <div class="alert-desc">Суммарный убыток −19 748 ₽. Приоритет: Пакет новогодний (−6 940 ₽), Картины по номерам.</div>
+          </div>
+          <div class="alert-badge">33 SKU</div>
+        </div>
+        <div class="alert danger">
+          <div class="alert-icon">❌</div>
+          <div class="alert-text">
+            <div class="alert-title">Высокая логистическая нагрузка</div>
+            <div class="alert-desc">Логистика = 34.8% от выручки. Основная статья расходов — пересмотреть товары с малым чеком.</div>
+          </div>
+          <div class="alert-badge">110 932 ₽</div>
+        </div>
+        <div class="alert warn">
+          <div class="alert-icon">⚠</div>
+          <div class="alert-text">
+            <div class="alert-title">1 SKU без себестоимости</div>
+            <div class="alert-desc">Коробка для мини десерта 20 шт — доход +461 ₽ не учтён в прибыли. Заполнить COGS.</div>
+          </div>
+          <div class="alert-badge">1 SKU</div>
+        </div>
+        <div class="alert ok">
+          <div class="alert-icon">✅</div>
+          <div class="alert-text">
+            <div class="alert-title">Штрафы минимальны</div>
+            <div class="alert-desc">Всего −10 ₽ штрафов за январь. Логистические нормативы соблюдаются.</div>
+          </div>
+          <div class="alert-badge">−10 ₽</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Источник: Отчёт реализации WB · Январь 2026 · Справочник себестоимостей Запакуй<br>
+    Данные верифицированы · Запакуй · Февраль 2026
+  </div>
+
+</div>
+
+</body>
+</html>
